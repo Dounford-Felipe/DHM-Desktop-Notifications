@@ -1,11 +1,13 @@
 // ==UserScript==
 // @name         DHM Desktop Notifications
+// @namespace    http://tampermonkey.net/
 // @version      1.0
-// @description  
+// @description  Desktop Notifications for DHM
 // @author       level
 // @match        https://dhm.idle-pixel.com/
 // @run-at       document-idle
 // @grant        none
+// @license      MIT
 // ==/UserScript==
 var VERSION_NUMBER = "1.0";
 
