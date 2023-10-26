@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DHM Desktop Notifications
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  Desktop Notifications for DHM
 // @author       level
 // @match        https://dhm.idle-pixel.com/
@@ -9,7 +9,7 @@
 // @grant        none
 // @license      MIT
 // ==/UserScript==
-var VERSION_NUMBER = "1.0";
+var VERSION_NUMBER = "1.1";
 
 window.addEventListener("load", function() {
     console.log('Loading DHM Helper...');
@@ -390,6 +390,28 @@ window.addEventListener("load", function() {
 
         menu.appendChild(treeInputContainer);
 
+        // Tree Notifications Checkbox
+        let shinyTreeInputContainer = document.createElement('div');
+        shinyTreeInputContainer.setAttribute('class', 'dhm-helper-inputContainer dhm-helper-inputContainer-sub');
+        let shinyTreeInput = document.createElement('input');
+        shinyTreeInput.setAttribute('type', 'checkbox');
+        shinyTreeInput.setAttribute('name', 'dhm-notificationsInput');
+        shinyTreeInput.setAttribute('data-storage', 'hShinyTree');
+        
+        if (localStorage.hShinyTree === "true") {
+            shinyTreeInput.setAttribute('checked', 'checked');
+        }
+        shinyTreeInput.addEventListener("change", toggleStorage);
+        
+        let shinyTreeLabel = document.createElement('label');
+        shinyTreeLabel.setAttribute('for', 'checkbox');
+        shinyTreeLabel.innerText = "Shiny Tree Notifications";
+
+        shinyTreeInputContainer.append(shinyTreeInput);
+        shinyTreeInputContainer.append(shinyTreeLabel);
+
+        menu.appendChild(shinyTreeInputContainer);
+
         // Planter Notifications Checkbox
         let planterInputContainer = document.createElement('div');
         planterInputContainer.setAttribute('class', 'dhm-helper-inputContainer dhm-helper-inputContainer-sub');
@@ -755,6 +777,85 @@ window.toggleMenu2 = toggleMenu
 		
 		var treeTarget = document.getElementById('notification-treeNotification');
         treeObserver.observe(treeTarget, { attributes : true, attributeFilter : ['style'] });
+		
+		// Shiny Tree
+		var shinyTree1Observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutationRecord) {
+                if (document.getElementById("tree-thumbnail-img-1").style.backgroundImage == 'url("images/shiny.gif")') {
+                    if ((localStorage.hNotifications === "true") && (localStorage.hShinyTree === "true")) {
+                        var notification = new Notification("Shiny Tree Growing",{ icon: 'images/shiny.gif' });
+                    }
+                }
+            });    
+        });
+		
+		var shinyTree1Target = document.getElementById('tree-thumbnail-img-1');
+        shinyTree1Observer.observe(shinyTree1Target, { attributes : true, attributeFilter : ['style'] });
+		//2
+		var shinyTree2Observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutationRecord) {
+                if (document.getElementById("tree-thumbnail-img-2").style.backgroundImage == 'url("images/shiny.gif")') {
+                    if ((localStorage.hNotifications === "true") && (localStorage.hShinyTree === "true")) {
+                        var notification = new Notification("Shiny Tree Growing",{ icon: 'images/shiny.gif' });
+                    }
+                }
+            });    
+        });
+		
+		var shinyTree2Target = document.getElementById('tree-thumbnail-img-2');
+        shinyTree2Observer.observe(shinyTree2Target, { attributes : true, attributeFilter : ['style'] });
+		//3
+		var shinyTree3Observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutationRecord) {
+                if (document.getElementById("tree-thumbnail-img-3").style.backgroundImage == 'url("images/shiny.gif")') {
+                    if ((localStorage.hNotifications === "true") && (localStorage.hShinyTree === "true")) {
+                        var notification = new Notification("Shiny Tree Growing",{ icon: 'images/shiny.gif' });
+                    }
+                }
+            });    
+        });
+		
+		var shinyTree3Target = document.getElementById('tree-thumbnail-img-3');
+        shinyTree3Observer.observe(shinyTree3Target, { attributes : true, attributeFilter : ['style'] });
+		//4
+		var shinyTree4Observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutationRecord) {
+                if (document.getElementById("tree-thumbnail-img-4").style.backgroundImage == 'url("images/shiny.gif")') {
+                    if ((localStorage.hNotifications === "true") && (localStorage.hShinyTree === "true")) {
+                        var notification = new Notification("Shiny Tree Growing",{ icon: 'images/shiny.gif' });
+                    }
+                }
+            });    
+        });
+		
+		var shinyTree4Target = document.getElementById('tree-thumbnail-img-4');
+        shinyTree4Observer.observe(shinyTree4Target, { attributes : true, attributeFilter : ['style'] });
+		//5
+		var shinyTree5Observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutationRecord) {
+                if (document.getElementById("tree-thumbnail-img-5").style.backgroundImage == 'url("images/shiny.gif")') {
+                    if ((localStorage.hNotifications === "true") && (localStorage.hShinyTree === "true")) {
+                        var notification = new Notification("Shiny Tree Growing",{ icon: 'images/shiny.gif' });
+                    }
+                }
+            });    
+        });
+		
+		var shinyTree5Target = document.getElementById('tree-thumbnail-img-5');
+        shinyTree5Observer.observe(shinyTree5Target, { attributes : true, attributeFilter : ['style'] });
+		//6
+		var shinyTree6Observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutationRecord) {
+                if (document.getElementById("tree-thumbnail-img-6").style.backgroundImage == 'url("images/shiny.gif")') {
+                    if ((localStorage.hNotifications === "true") && (localStorage.hShinyTree === "true")) {
+                        var notification = new Notification("Shiny Tree Growing",{ icon: 'images/shiny.gif' });
+                    }
+                }
+            });    
+        });
+		
+		var shinyTree6Target = document.getElementById('tree-thumbnail-img-6');
+        shinyTree6Observer.observe(shinyTree6Target, { attributes : true, attributeFilter : ['style'] });
 		
 		// Planter Empty
 		var planterObserver = new MutationObserver(function(mutations) {
