@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DHM Desktop Notifications
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.2
 // @description  Desktop Notifications for DHM
 // @author       level
 // @match        https://dhm.idle-pixel.com/
@@ -390,7 +390,7 @@ window.addEventListener("load", function() {
 
         menu.appendChild(treeInputContainer);
 
-        // Tree Notifications Checkbox
+        // Shiny Tree Notifications Checkbox
         let shinyTreeInputContainer = document.createElement('div');
         shinyTreeInputContainer.setAttribute('class', 'dhm-helper-inputContainer dhm-helper-inputContainer-sub');
         let shinyTreeInput = document.createElement('input');
@@ -455,6 +455,28 @@ window.addEventListener("load", function() {
         explorerInputContainer.append(explorerLabel);
 
         menu.appendChild(explorerInputContainer);
+
+        // Shiny Monster Notifications Checkbox
+        let shinyInputContainer = document.createElement('div');
+        shinyInputContainer.setAttribute('class', 'dhm-helper-inputContainer dhm-helper-inputContainer-sub');
+        let shinyInput = document.createElement('input');
+        shinyInput.setAttribute('type', 'checkbox');
+        shinyInput.setAttribute('name', 'dhm-notificationsInput');
+        shinyInput.setAttribute('data-storage', 'hShiny');
+        
+        if (localStorage.hShiny === "true") {
+            shinyInput.setAttribute('checked', 'checked');
+        }
+        shinyInput.addEventListener("change", toggleStorage);
+        
+        let shinyLabel = document.createElement('label');
+        shinyLabel.setAttribute('for', 'checkbox');
+        shinyLabel.innerText = "Shiny Monster Notifications";
+
+        shinyInputContainer.append(explorerInput);
+        shinyInputContainer.append(explorerLabel);
+
+        menu.appendChild(shinyInputContainer);
 
         // Cousin Notifications Checkbox
         let cousinInputContainer = document.createElement('div');
@@ -884,6 +906,20 @@ window.toggleMenu2 = toggleMenu
 		
 		var explorerTarget = document.getElementById('notification-exploringNotification');
         explorerObserver.observe(explorerTarget, { attributes : true, attributeFilter : ['style'] });
+		
+		// Shiny Monster
+		var shinyObserver = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutationRecord) {
+                if (document.getElementById("img-tag-monster-shiny").style.display !== "none") {
+                    if ((localStorage.hNotifications === "true") && (localStorage.hShiny === "true")) {
+                        var notification = new Notification("Shiny Monster",{ icon: 'images/shiny.gif' });
+                    }
+                }
+            });    
+        });
+		
+		var shinyTarget = document.getElementById('img-tag-monster-shiny');
+        shinyObserver.observe(shinyTarget, { attributes : true, attributeFilter : ['style'] });
 		
 		// Cousin Idle
 		var cousinObserver = new MutationObserver(function(mutations) {
