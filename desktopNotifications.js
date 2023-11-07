@@ -456,6 +456,28 @@ window.addEventListener("load", function() {
 
         menu.appendChild(explorerInputContainer);
 
+        // Teleport Notifications Checkbox
+        let teleportInputContainer = document.createElement('div');
+        teleportInputContainer.setAttribute('class', 'dhm-helper-inputContainer dhm-helper-inputContainer-sub');
+        let teleportInput = document.createElement('input');
+        teleportInput.setAttribute('type', 'checkbox');
+        teleportInput.setAttribute('name', 'dhm-notificationsInput');
+        teleportInput.setAttribute('data-storage', 'hTeleport');
+        
+        if (localStorage.hTeleport === "true") {
+            teleportInput.setAttribute('checked', 'checked');
+        }
+        teleportInput.addEventListener("change", toggleStorage);
+        
+        let teleportLabel = document.createElement('label');
+        teleportLabel.setAttribute('for', 'checkbox');
+        teleportLabel.innerText = "Teleport Notifications";
+
+        teleportInputContainer.append(teleportInput);
+        teleportInputContainer.append(teleportLabel);
+
+        menu.appendChild(teleportInputContainer);
+
         // Shiny Monster Notifications Checkbox
         let shinyInputContainer = document.createElement('div');
         shinyInputContainer.setAttribute('class', 'dhm-helper-inputContainer dhm-helper-inputContainer-sub');
@@ -473,8 +495,8 @@ window.addEventListener("load", function() {
         shinyLabel.setAttribute('for', 'checkbox');
         shinyLabel.innerText = "Shiny Monster Notifications";
 
-        shinyInputContainer.append(explorerInput);
-        shinyInputContainer.append(explorerLabel);
+        shinyInputContainer.append(shinyInput);
+        shinyInputContainer.append(shinyLabel);
 
         menu.appendChild(shinyInputContainer);
 
@@ -906,6 +928,20 @@ window.toggleMenu2 = toggleMenu
 		
 		var explorerTarget = document.getElementById('notification-exploringNotification');
         explorerObserver.observe(explorerTarget, { attributes : true, attributeFilter : ['style'] });
+		
+		// Teleport Ready
+		var teleportObserver = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutationRecord) {
+                if (document.getElementById("explorer-teleportCd-label").style.display == "none") {
+                    if ((localStorage.hNotifications === "true") && (localStorage.hTeleport === "true")) {
+                        var notification = new Notification("Teleport Ready",{ icon: 'images/teleportSpell.png' });
+                    }
+                }
+            });    
+        });
+		
+		var teleportTarget = document.getElementById('explorer-teleportCd-label');
+        teleportObserver.observe(teleportTarget, { attributes : true, attributeFilter : ['style'] });
 		
 		// Shiny Monster
 		var shinyObserver = new MutationObserver(function(mutations) {
